@@ -78,6 +78,8 @@ player_movement = {
 
 player_speed = 5
 
+points = []
+
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -104,6 +106,20 @@ def handle_keys_d(KEY_PRESSED):
 
     if KEY_PRESSED == pygame.K_RIGHT:
         player_movement["right"] = True
+
+    if KEY_PRESSED == pygame.K_SPACE:
+        points.append({"x": player1["head"]["x"], "y": player1["head"]["y"]})
+        c.log("[b yellow]Point added[/]")
+        c.log("[b yellow]Points:[/]", points)
+
+    if KEY_PRESSED == pygame.K_BACKSPACE:
+        try:
+            points.pop(-1)
+            c.log("[b yellow]Point removed[/]")
+            c.log("[b yellow]Points:[/]", points)
+        except IndexError:
+            c.log("[b yellow]No points to remove[/]")
+            c.log("[b yellow]Points:[/]", points)
 
 def handle_keys_u(KEY_RELEASED):
     if KEY_RELEASED == pygame.K_UP:
