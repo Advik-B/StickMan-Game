@@ -155,7 +155,6 @@ def update_player1():
 
     # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
 
-
 def draw_stuff():
     update_player1()
     pygame.draw.circle(
@@ -174,6 +173,13 @@ def draw_stuff():
             player1["body"]["height"],
         ),
     )
+    for point in points:
+        pygame.draw.circle(
+            screen,
+            COLORS["red"],
+            (point["x"], point["y"]),
+            5,
+        )
 
 
 def main():
