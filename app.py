@@ -11,6 +11,11 @@ install(console=c, extra_lines=5, indent_guides=True, show_locals=True)
 
 c.log("[b magenta]Loading PyGame(SDL2)...[/]")
 import pygame
+c.log("[b magenta]Loaded PyGame(SDL2): [/]")
+c.log("[b yellow]PyGame Version[/]:", pygame.__version__)
+SDL = pygame.version.get_sdl_version()
+c.log("[b blue]SDL Version[/]:", f"{SDL[0]}.{SDL[1]}.{SDL[2]}")
+del SDL
 
 from window_stuff import GAME_HEIGHT, GAME_WIDTH
 
@@ -53,7 +58,6 @@ def pre_launch():
 GAME_IS_RUNNING = True
 c.log("[b magenta]Initialising game...[/]")
 screen = pre_launch()
-
 player1 = {
     "head": {"y": 100, "x": 100, "color": COLORS["aqua"], "radius": 32},
     "body": {
