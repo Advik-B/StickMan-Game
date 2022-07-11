@@ -55,6 +55,11 @@ player1 = {
         "color": COLORS["aqua"],
         "radius": 32
     },
+    "body": {
+        "y": 100,
+        "x": 100,
+        "color": COLORS["blurple"],
+    }
 }
 
 # Functions
@@ -78,9 +83,18 @@ def update_game_screen():
     pygame.display.update()
     pygame.display.flip()
 
+def update_player1():
+    global player1
+    # Set the player1's position according to the head's position
+    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 64)
+    player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
+
+
 
 def draw_stuff():
+    update_player1()
     pygame.draw.circle(screen, player1["head"]["color"], (player1["head"]["x"], player1["head"]["y"]), player1["head"]["radius"])
+    pygame.draw.rect(screen, player1["body"]["color"], (player1["body"]["x"], player1["body"]["y"], player1["head"]["radius"]*2, player1["head"]["radius"]*2))
 
 def main():
     while GAME_IS_RUNNING:
