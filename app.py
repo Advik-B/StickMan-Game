@@ -54,6 +54,8 @@ player1 = {
         "y": 100,
         "x": 100,
         "color": COLORS["blurple"],
+        "width": 64,
+        "height": 64,
     },
 }
 
@@ -100,8 +102,8 @@ def draw_stuff():
         (
             player1["body"]["x"],
             player1["body"]["y"],
-            player1["head"]["radius"] * 2,
-            player1["head"]["radius"] * 2,
+            player1["body"]["width"],
+            player1["body"]["height"],
         ),
     )
 
