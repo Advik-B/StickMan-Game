@@ -1,5 +1,7 @@
 import json
 import sys
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
 from rich.console import Console
 from rich.traceback import install
@@ -59,6 +61,15 @@ player1 = {
     },
 }
 
+player_movement = {
+    "up": False,
+    "down": False,
+    "left": False,
+    "right": False,
+}
+
+player_speed = 5
+
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -66,12 +77,35 @@ def do_event_loop():
         if event.type == pygame.QUIT:
             GAME_IS_RUNNING = False
         if event.type == pygame.KEYDOWN:
-            handle_keys(event.key)
+            handle_keys_d(event.key)
+        if event.type == pygame.KEYUP:
+            handle_keys_u(event.key)
 
 
-def handle_keys(KEY_PRESSED):
+def handle_keys_d(KEY_PRESSED):
     if KEY_PRESSED == pygame.K_ESCAPE:
         GAME_IS_RUNNING = False
+    if KEY_PRESSED == pygame.K_UP:
+        player_movement["up"] = True
+
+    if KEY_PRESSED == pygame.K_DOWN:
+        player_movement["down"] = True
+
+    if KEY_PRESSED == pygame.K_LEFT:
+        player_movement["left"] = True
+
+    if KEY_PRESSED == pygame.K_RIGHT:
+        player_movement["right"] = True
+
+def handle_keys_u(KEY_RELEASED):
+    if KEY_RELEASED == pygame.K_UP:
+        player_movement["up"] = False
+    if KEY_RELEASED == pygame.K_DOWN:
+        player_movement["down"] = False
+    if KEY_RELEASED == pygame.K_LEFT:
+        player_movement["left"] = False
+    if KEY_RELEASED == pygame.K_RIGHT:
+        player_movement["right"] = False
 
 
 def update_game_screen():
@@ -84,8 +118,18 @@ def update_game_screen():
 def update_player1():
     global player1
     # Set the player1's position according to the head's position
-    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 37)
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
+    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 37)
+    if player_movement["up"]:
+        player1["head"]["y"] -= player_speed
+    if player_movement["down"]:
+        player1["head"]["y"] += player_speed
+    if player_movement["left"]:
+        player1["head"]["x"] -= player_speed
+    if player_movement["right"]:
+        player1["head"]["x"] += player_speed
+
+    # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
 
 
 def draw_stuff():
@@ -132,4 +176,5 @@ if __name__ == "__main__":
         sys.exit(1)
 
     finally:
+        c.log("[b green]Thanks for playing![/]")
         sys.exit(0)
