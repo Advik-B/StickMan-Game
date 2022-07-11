@@ -1,20 +1,28 @@
+import json
+import sys
+
 from rich.console import Console
 from rich.traceback import install
-import sys
-c = Console(color_system="truecolor", file=sys.stdout, record=True)
 
+c = Console(color_system="truecolor", file=sys.stdout, record=True)
 install(console=c, extra_lines=5, indent_guides=True, show_locals=True)
 import pygame
-from window_stuff import GAME_WIDTH, GAME_HEIGHT
+
+from window_stuff import GAME_HEIGHT, GAME_WIDTH
+
+with open("colors.json") as colors:
+    COLORS = json.load(colors)
 
 WINDOW = {
-    "width": GAME_WIDTH,
-    "height": GAME_HEIGHT,
+    "width": GAME_WIDTH* .9,
+    "height": GAME_HEIGHT * .8,
     "resizable": False,
-    "fullscreen": True,
+    "fullscreen": False,
     "VSync": pygame.DOUBLEBUF,
     "BACKGROUND_COLOR": (39, 41, 46),
 }
+
+PLAYER_COLOR = (255, 255, 255)
 
 # Super function to initialize the game
 def pre_launch():
@@ -40,6 +48,15 @@ def pre_launch():
 GAME_IS_RUNNING = True
 screen = pre_launch()
 
+player1 = {
+    "head": {
+        "y": 100,
+        "x": 100,
+        "color": COLORS["aqua"],
+        "radius": 32
+    },
+}
+
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -57,32 +74,30 @@ def handle_keys(KEY_PRESSED):
 
 def update_game_screen():
     screen.fill(WINDOW["BACKGROUND_COLOR"])
+    draw_stuff()
     pygame.display.update()
+    pygame.display.flip()
 
 
 def draw_stuff():
-    pass
-
+    pygame.draw.circle(screen, player1["head"]["color"], (player1["head"]["x"], player1["head"]["y"]), player1["head"]["radius"])
 
 def main():
     while GAME_IS_RUNNING:
         # Events
         do_event_loop()
-        # Draw stuff
-        draw_stuff()
         # Update screen
         update_game_screen()
-
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        c.log("Why did you press Ctrl+C?, Why din't you close the game normally?")
+        c.log("[b]Why[/] did you press [i purple]Ctrl+C[/]?, Why din't you close the game normally?")
 
     except BaseException:
         c.print_exception()
-        c.log("Game crashed, please report this to the developer (advik.b@gmail.com)")
+        c.log("[b red] Game crashed[/], [i]please[/] report this to the developer [b green](https://github.com/Advik-B/StickMan-Game/issues/new/choose)[/]")
         sys.exit(1)
 
     finally:
