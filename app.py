@@ -1,7 +1,8 @@
 import json
 import sys
 import os
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
 from rich.console import Console
 from rich.traceback import install
@@ -11,6 +12,7 @@ install(console=c, extra_lines=5, indent_guides=True, show_locals=True)
 
 c.log("[b magenta]Loading PyGame(SDL2)...[/]")
 import pygame
+
 c.log("[b magenta]Loaded PyGame(SDL2): [/]")
 c.log("[b yellow]PyGame Version[/]:", pygame.__version__)
 SDL = pygame.version.get_sdl_version()
@@ -79,7 +81,7 @@ player_movement = {
 player_speed = 5
 
 points = []
-
+point_precesion = 5
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -108,7 +110,12 @@ def handle_keys_d(KEY_PRESSED):
         player_movement["right"] = True
 
     if KEY_PRESSED == pygame.K_SPACE:
-        points.append({"x": player1["head"]["x"], "y": player1["head"]["y"]})
+        points.append(
+            {
+                "x": player1["body"]["x"] + player1["body"]["width"] - point_precesion,
+                "y": player1["body"]["y"] + player1["body"]["height"] + point_precesion,
+            }
+        )
         c.log("[b yellow]Point added[/]")
         c.log("[b yellow]Points:[/]", points)
 
@@ -120,6 +127,7 @@ def handle_keys_d(KEY_PRESSED):
         except IndexError:
             c.log("[b yellow]No points to remove[/]")
             c.log("[b yellow]Points:[/]", points)
+
 
 def handle_keys_u(KEY_RELEASED):
     if KEY_RELEASED == pygame.K_UP:
@@ -155,6 +163,7 @@ def update_player1():
 
     # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
 
+
 def draw_stuff():
     update_player1()
     pygame.draw.circle(
@@ -176,7 +185,7 @@ def draw_stuff():
     for point in points:
         pygame.draw.circle(
             screen,
-            COLORS["red"],
+            COLORS["lime"],
             (point["x"], point["y"]),
             5,
         )
