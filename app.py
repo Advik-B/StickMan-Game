@@ -8,10 +8,13 @@ from rich.traceback import install
 
 c = Console(color_system="truecolor", file=sys.stdout, record=True)
 install(console=c, extra_lines=5, indent_guides=True, show_locals=True)
+
+c.log("[b magenta]Loading PyGame(SDL2)...[/]")
 import pygame
 
 from window_stuff import GAME_HEIGHT, GAME_WIDTH
 
+c.log("[b magenta]Loading colors defined in json file...[/]")
 with open("colors.json") as colors:
     COLORS = json.load(colors)
 
@@ -48,6 +51,7 @@ def pre_launch():
 
 # Variables
 GAME_IS_RUNNING = True
+c.log("[b magenta]Initialising game...[/]")
 screen = pre_launch()
 
 player1 = {
@@ -162,6 +166,7 @@ def main():
 
 if __name__ == "__main__":
     try:
+        c.log("[b magenta]Starting game...[/]")
         main()
     except KeyboardInterrupt:
         c.log(
