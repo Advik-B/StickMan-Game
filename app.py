@@ -41,7 +41,7 @@ def pre_launch():
     global screen
     pygame.init()
     pygame.display.init()
-    pygame.display.set_caption("My Game")
+    pygame.display.set_caption("StickMan Game")
     screen = pygame.display.set_mode((WINDOW["width"], WINDOW["height"]))
 
     if WINDOW["resizable"]:
