@@ -54,8 +54,8 @@ player1 = {
         "y": 100,
         "x": 100,
         "color": COLORS["blurple"],
-        "width": 64,
-        "height": 64,
+        "height": 100,
+        "width": 10,
     },
 }
 
@@ -84,7 +84,7 @@ def update_game_screen():
 def update_player1():
     global player1
     # Set the player1's position according to the head's position
-    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 64)
+    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 37)
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
 
 
