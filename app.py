@@ -1,7 +1,9 @@
 import json
 import sys
 import os
+import random
 from time import sleep
+from math import sin, cos, radians
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
@@ -91,6 +93,7 @@ points = []
 point_precesion = 5
 point_radius = 6
 border_radius = 10
+
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -176,10 +179,17 @@ def update_player1():
         player1["head"]["y"] += player_speed
     if player_movement["left"]:
         player1["head"]["x"] -= player_speed
+        if player1["legs"]["left"]["rotation"] > -40:
+            player1["legs"]["left"]["rotation"] -= player_speed
+        else:
+            player1["legs"]["left"]["rotation"] += player_speed
     if player_movement["right"]:
         player1["head"]["x"] += player_speed
-
-    # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
+        if player1["legs"]["right"]["rotation"] < 40:
+            player1["legs"]["right"]["rotation"] += player_speed
+        else:
+            player1["legs"]["right"]["rotation"] -= player_speed
+    # player1["legs"]["left"]["rotation"] += player_speed
 
 def crash():
     raise Exception("Crashed because of pressing C (custom crash)")
@@ -210,28 +220,158 @@ def draw_stuff():
         ),
         border_radius=10,
     )
+    left_leg_surface = pygame.Surface(
+        (player1["legs"]["width"], player1["legs"]["height"])
+    )
+    left_leg_surface.fill(WINDOW["BACKGROUND_COLOR"])
     pygame.draw.rect(
-        screen,
-        player1["legs"]["left"]["color"],
+        left_leg_surface,
+        COLORS["lime"],
+        (
+            0,
+            0,
+            player1["legs"]["width"],
+            player1["legs"]["height"],
+        ),
+        border_radius=10,
+    )
+    screen.blit(
+        left_leg_surface,
         (
             player1["legs"]["left"]["x"],
             player1["legs"]["left"]["y"],
+        ),
+    )
+    right_leg_surface = pygame.Surface(
+        (player1["legs"]["width"], player1["legs"]["height"])
+    )
+    right_leg_surface.fill(WINDOW["BACKGROUND_COLOR"])
+    pygame.draw.rect(
+        right_leg_surface,
+        COLORS["lime"],
+        (
+            0,
+            0,
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
-        border_radius=border_radius,
+        border_radius=10,
     )
-    pygame.draw.rect(
-        screen,
-        player1["legs"]["right"]["color"],
+    right_leg_surface = pygame.transform.rotate(right_leg_surface, player1["legs"]["right"]["rotation"])
+    right_leg_surface.set_colorkey(WINDOW["BACKGROUND_COLOR"])
+    screen.blit(
+        right_leg_surface,
         (
             player1["legs"]["right"]["x"],
             player1["legs"]["right"]["y"],
+        ),
+    )
+    pygame.draw.rect(
+        screen,
+        player1["body"]["color"],
+        (
+            player1["body"]["x"],
+            player1["body"]["y"],
+            player1["body"]["width"],
+            player1["body"]["height"],
+        ),
+        border_radius=10,
+    )
+    left_leg_surface = pygame.transform.rotate(
+        left_leg_surface, player1["legs"]["left"]["rotation"]
+    )
+    right_leg_surface = pygame.Surface(
+        (player1["legs"]["width"], player1["legs"]["height"])
+    )
+    pygame.draw.rect(
+        right_leg_surface,
+        COLORS["lime"],
+        (
+            0,
+            0,
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
-        border_radius=border_radius,
+        border_radius=10,
     )
+    screen.blit(
+        left_leg_surface,
+        (
+            player1["legs"]["left"]["x"],
+            player1["legs"]["left"]["y"],
+        ),
+    )
+    right_leg_surface = pygame.transform.rotate(
+        right_leg_surface, player1["legs"]["right"]["rotation"]
+    )
+    right_leg_surface.set_colorkey(WINDOW["BACKGROUND_COLOR"])
+    screen.blit(
+        right_leg_surface,
+        (
+            player1["legs"]["right"]["x"],
+            player1["legs"]["right"]["y"],
+        ),
+    )
+    pygame.draw.rect(
+        screen,
+        player1["body"]["color"],
+        (
+            player1["body"]["x"],
+            player1["body"]["y"],
+            player1["body"]["width"],
+            player1["body"]["height"],
+        ),
+        border_radius=10,
+    )
+    left_leg_surface = pygame.transform.rotate(
+        left_leg_surface, player1["legs"]["left"]["rotation"]
+    )
+    right_leg_surface = pygame.Surface(
+        (player1["legs"]["width"], player1["legs"]["height"])
+    )
+    pygame.draw.rect(
+        right_leg_surface,
+        COLORS["lime"],
+        (
+            0,
+            0,
+            player1["legs"]["width"],
+            player1["legs"]["height"],
+        ),
+        border_radius=10,
+    )
+    # right_leg_surface.fill(WINDOW["BACKGROUND_COLOR"])
+    # right_leg_surface = pygame.transform.rotate(
+    #     right_leg_surface, player1["legs"]["right"]["rotation"]
+    # )
+    # screen.blit(left_leg_surface, (player1["legs"]["left"]["x"], player1["legs"]["left"]["y"]))
+    # screen.blit(right_leg_surface, (player1["legs"]["right"]["x"], player1["legs"]["right"]["y"]))
+
+
+    # pygame.draw.rect(
+    #     screen,
+    #     COLORS["aqua"],
+
+    #     (
+    #         player1["legs"]["left"]["x"],
+    #         player1["legs"]["left"]["y"],
+    #         player1["legs"]["width"],
+    #         player1["legs"]["height"],
+    #     ),
+    #     border_radius=10,
+    # )
+    # pygame.draw.rect(
+    #     screen,
+    #     COLORS["aqua"],
+    #     (
+    #         player1["legs"]["right"]["x"],
+    #         player1["legs"]["right"]["y"],
+    #         player1["legs"]["width"],
+    #         player1["legs"]["height"],
+    #     ),
+    #     border_radius=10,
+    # )
+    # Draw the legs with rotation using the pygame.transform.rotate function
 
 
 def main():
