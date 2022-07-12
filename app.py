@@ -69,6 +69,12 @@ player1 = {
         "height": 100,
         "width": 10,
     },
+    "legs": {
+        "left" :{"y": 100, "x": 100, "color": COLORS["blurple"] },
+        "right" :{"y": 100, "x": 100, "color": COLORS["blurple"] },
+        "width": 10,
+        "height": 100,
+    }
 }
 
 player_movement = {
