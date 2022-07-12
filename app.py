@@ -158,6 +158,11 @@ def update_player1():
     # Set the player1's position according to the head's position
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
     player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 37)
+    # Set the player1's legs position according to the body's position
+    player1["legs"]["left"]["y"] = player1["body"]["y"] + player1["body"]["height"]
+    player1["legs"]["left"]["x"] = player1["body"]["x"] - player1["legs"]["width"]
+    player1["legs"]["right"]["y"] = player1["body"]["y"] + player1["body"]["height"]
+    player1["legs"]["right"]["x"] = player1["body"]["x"] + player1["body"]["width"]
     if player_movement["up"]:
         player1["head"]["y"] -= player_speed
     if player_movement["down"]:
@@ -188,12 +193,32 @@ def draw_stuff():
             player1["body"]["height"],
         ),
     )
+    pygame.draw.rect(
+        screen,
+        player1["legs"]["left"]["color"],
+        (
+            player1["legs"]["left"]["x"],
+            player1["legs"]["left"]["y"],
+            player1["legs"]["width"],
+            player1["legs"]["height"],
+        ),
+    )
+    pygame.draw.rect(
+        screen,
+        player1["legs"]["right"]["color"],
+        (
+            player1["legs"]["right"]["x"],
+            player1["legs"]["right"]["y"],
+            player1["legs"]["width"],
+            player1["legs"]["height"],
+        ),
+    )
     for point in points:
         pygame.draw.circle(
             screen,
-            COLORS["lime"],
+            COLORS["yellow"],
             (point["x"], point["y"]),
-            5,
+            point_precesion,
         )
 
 
