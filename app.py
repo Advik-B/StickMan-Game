@@ -85,7 +85,7 @@ player_movement = {
     "right": False,
 }
 
-player_speed = 1
+player_speed = 5
 
 points = []
 point_precesion = 5
@@ -137,6 +137,9 @@ def handle_keys_d(KEY_PRESSED):
             c.log("[b yellow]No points to remove[/]")
             c.log("[b yellow]Points:[/]", points)
 
+    if KEY_PRESSED == pygame.K_c:
+        crash()
+
 
 def handle_keys_u(KEY_RELEASED):
     if KEY_RELEASED == pygame.K_UP:
@@ -179,7 +182,7 @@ def update_player1():
     # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
 
 def crash():
-    raise Exception("Crashed because of pressing c")
+    raise Exception("Crashed because of pressing C (custom crash)")
 
 def draw_stuff():
     update_player1()
