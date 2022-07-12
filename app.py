@@ -178,6 +178,8 @@ def update_player1():
 
     # player1["head"]["y"] = WINDOW["height"] - player1["body"]["height"]
 
+def crash():
+    raise Exception("Crashed because of pressing c")
 
 def draw_stuff():
     update_player1()
