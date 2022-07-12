@@ -160,7 +160,7 @@ def update_player1():
     global player1
     # Set the player1's position according to the head's position
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
-    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - 37)
+    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - player1["head"]["radius"] - player_speed)
     # Set the player1's legs position according to the body's position
     player1["legs"]["left"]["y"] = player1["body"]["y"] + player1["body"]["height"]
     player1["legs"]["left"]["x"] = player1["body"]["x"] - player1["legs"]["width"]
