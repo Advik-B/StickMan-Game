@@ -90,6 +90,7 @@ player_speed = 1
 points = []
 point_precesion = 5
 point_radius = 6
+border_radius = 10
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -213,7 +214,7 @@ def draw_stuff():
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
-        border_radius=10,
+        border_radius=border_radius,
     )
     pygame.draw.rect(
         screen,
@@ -224,7 +225,7 @@ def draw_stuff():
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
-        border_radius=10,
+        border_radius=border_radius,
     )
 
 
