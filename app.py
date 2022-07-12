@@ -70,8 +70,8 @@ player1 = {
         "width": 10,
     },
     "legs": {
-        "left" :{"y": 100, "x": 100, "color": COLORS["blurple"] },
-        "right" :{"y": 100, "x": 100, "color": COLORS["blurple"] },
+        "left" :{"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
+        "right" :{"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
         "width": 10,
         "height": 100,
     }
