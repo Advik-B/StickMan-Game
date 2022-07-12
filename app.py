@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+from time import sleep
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
@@ -88,6 +89,7 @@ player_speed = 5
 
 points = []
 point_precesion = 5
+point_radius = 6
 # Functions
 def do_event_loop():
     global GAME_IS_RUNNING
@@ -151,6 +153,7 @@ def update_game_screen():
     draw_stuff()
     pygame.display.update()
     pygame.display.flip()
+    # sleep(0.05) #HACK: Use this to simulate a lag
 
 
 def update_player1():
@@ -177,6 +180,13 @@ def update_player1():
 
 def draw_stuff():
     update_player1()
+    for point in points:
+        pygame.draw.circle(
+            screen,
+            COLORS["yellow"],
+            (point["x"], point["y"]),
+            point_radius,
+        )
     pygame.draw.circle(
         screen,
         player1["head"]["color"],
@@ -192,6 +202,8 @@ def draw_stuff():
             player1["body"]["width"],
             player1["body"]["height"],
         ),
+        border_radius=10,
+
     )
     pygame.draw.rect(
         screen,
@@ -202,6 +214,8 @@ def draw_stuff():
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
+        border_radius=10,
+
     )
     pygame.draw.rect(
         screen,
@@ -212,14 +226,9 @@ def draw_stuff():
             player1["legs"]["width"],
             player1["legs"]["height"],
         ),
+        border_radius=10,
     )
-    for point in points:
-        pygame.draw.circle(
-            screen,
-            COLORS["yellow"],
-            (point["x"], point["y"]),
-            point_precesion,
-        )
+
 
 
 def main():
@@ -234,6 +243,7 @@ if __name__ == "__main__":
     try:
         c.log("[b magenta]Starting game...[/]")
         main()
+        c.log("[b green]Thanks for playing![/]")
     except KeyboardInterrupt:
         c.log(
             "[b]Why[/] did you press [i purple]Ctrl+C[/]?, Why din't you close the game normally?"
@@ -246,6 +256,4 @@ if __name__ == "__main__":
         )
         sys.exit(1)
 
-    finally:
-        c.log("[b green]Thanks for playing![/]")
-        sys.exit(0)
+    sys.exit(0)
