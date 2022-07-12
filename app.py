@@ -85,7 +85,7 @@ player_movement = {
     "right": False,
 }
 
-player_speed = 5
+player_speed = 1
 
 points = []
 point_precesion = 5
@@ -160,9 +160,7 @@ def update_player1():
     global player1
     # Set the player1's position according to the head's position
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
-    player1["body"]["x"] = player1["head"]["x"] + (
-        player1["head"]["radius"] - player1["head"]["radius"] - player_speed
-    )
+    player1["body"]["x"] = player1["head"]["x"] - player1["body"]["width"] / 2
     # Set the player1's legs position according to the body's position
     player1["legs"]["left"]["y"] = player1["body"]["y"] + player1["body"]["height"]
     player1["legs"]["left"]["x"] = player1["body"]["x"] - player1["legs"]["width"]
