@@ -71,11 +71,11 @@ player1 = {
         "width": 10,
     },
     "legs": {
-        "left" :{"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
-        "right" :{"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
+        "left": {"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
+        "right": {"y": 100, "x": 100, "color": COLORS["blurple"], "rotation": 0},
         "width": 10,
         "height": 100,
-    }
+    },
 }
 
 player_movement = {
@@ -160,7 +160,9 @@ def update_player1():
     global player1
     # Set the player1's position according to the head's position
     player1["body"]["y"] = player1["head"]["y"] + player1["head"]["radius"]
-    player1["body"]["x"] = player1["head"]["x"] + (player1["head"]["radius"] - player1["head"]["radius"] - player_speed)
+    player1["body"]["x"] = player1["head"]["x"] + (
+        player1["head"]["radius"] - player1["head"]["radius"] - player_speed
+    )
     # Set the player1's legs position according to the body's position
     player1["legs"]["left"]["y"] = player1["body"]["y"] + player1["body"]["height"]
     player1["legs"]["left"]["x"] = player1["body"]["x"] - player1["legs"]["width"]
@@ -203,7 +205,6 @@ def draw_stuff():
             player1["body"]["height"],
         ),
         border_radius=10,
-
     )
     pygame.draw.rect(
         screen,
@@ -215,7 +216,6 @@ def draw_stuff():
             player1["legs"]["height"],
         ),
         border_radius=10,
-
     )
     pygame.draw.rect(
         screen,
@@ -228,7 +228,6 @@ def draw_stuff():
         ),
         border_radius=10,
     )
-
 
 
 def main():
